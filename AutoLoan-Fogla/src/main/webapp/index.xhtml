@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+  - Created by Vishesh Fogla on 2021.9.02
+  - Copyright © 2021 Vishesh Fogla. All rights reserved.
+  -->
+<!--
+=====================================================================
+|               Declaration of Time Spent in Learning               |
+=====================================================================
+Per Virginia Tech Undergraduate Honor Code, I pledge to conduct
+myself with honor and integrity at all times. I will not lie, cheat,
+or steal, nor will I accept the actions of those who do.
+
+I hereby declare on my honor that I spent
+
+      5 hours and 30 minutes
+
+in learning from this tutorial. I have accomplished
+the stated Learning Objectives of this tutorial.
+
+By writing my full name as my signature below,
+I hereby certify that the above statements are true and accurate.
+
+               Vishesh Manoj Fogla
+=====================================================================
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <!--
+    The <title> element [https://www.w3schools.com/tags/tag_title.asp]
+       (a) defines a title in the browser's toolbar,
+       (b) provides a title for the page when it is added to favorites, and
+       (c) displays a title for the page in search-engine results.
+    -->
+    <title>Auto Loan</title>
+
+    <!--
+    =============================
+    *   Mobile Device Support   *
+    =============================
+    Instruct the web browser on how to control the page's dimensions
+    and scaling on mobile devices.
+
+    The viewport meta tag is given within the <head> element for proper rendering and
+    touch zooming on mobile devices. This tag must be used so that your pages are properly
+    displayed on mobile devices. Initially, the XHTML page is displayed on a mobile device
+    across its screen width at a 1:1 scale with no shrinking to fit to the screen size.
+    The user is allowed to zoom in or zoom out by default.
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!--
+    ================================
+    *   Handling Session Timeout   *
+    ================================
+    Show the sessionTimeout.xhtml page when user's session expires.
+    -->
+    <meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};
+              url=#{request.contextPath}/sessionTimeout.xhtml"/>
+
+    <!--
+    =============================
+    *   CSS for the Entire UI   *
+    =============================
+    The siteStyles CSS file is linked for styling and formatting the entire UI.0
+    -->
+    <h:outputStylesheet library="css" name="globalStyles.css"/>
+
+    <!--
+    ========================================
+    *   Font Awesome "SVG with JS" Icons   *
+    ========================================
+    The following enables the use of more than 1,600 "Scalable Vector Graphics (SVG) with
+    JavaScript (JS)" free icons listed at https://fontawesome.com/icons?d=gallery&m=free
+    -->
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" type="text/javascript"></script>
+
+    <!--
+    =====================
+    *   Favorite Icon   *
+    =====================
+    A favicon (short for favorite icon), also known as a shortcut icon, website icon, tab icon,
+    URL icon or bookmark icon, is a file named favicon.ico See https://en.wikipedia.org/wiki/Favicon
+    The icon is displayed to the left of the page title on a tab in the Chrome web browser.
+    The link below enables all your UI pages to display the favorite icon.
+
+    Use EL to get the image file since it will be referenced by all UI pages.
+    -->
+    <link rel="shortcut icon" href="#{resource['images:favicon.ico']}" type="image/x-icon"/>
+</h:head>
+<h:body>
+    <!--
+    ==============================
+    *   Display Error Messages   *
+    ==============================
+    -->
+    <!-- Display informational messages for 5 seconds and fade away (1 second = 1000 milliseconds) -->
+    <p:growl id="growlInfoMessage" severity="info" showDetail="true" life="5000"/>
+
+    <!-- Display warning messages with no time duration and let the user close it by clicking the message box -->
+    <p:growl id="growlWarningMessage" severity="warn" showDetail="true" sticky="true"/>
+
+    <!-- Display error messages for 10 seconds and fade away -->
+    <p:growl id="growlErrorMessage" severity="error" showDetail="false" life="10000"/>
+
+    <!-- Display fatal error messages for 10 seconds and fade away -->
+    <p:growl id="growlFatalMessage" severity="fatal" showDetail="true" life="10000"/>
+
+    <div align="center">
+        <h:form id="loanDataEntryForm">
+            <p>&nbsp;</p>   <!-- Leave a blank line on top (nbsp = Non-Breakable SPace) -->
+            <!-- The autoLoanHeader image is styled to decrease in size as the page width decreases -->
+            <h:graphicImage value="#{resource['images:autoLoanHeader.png']}" class="scalableImage"/>
+            <br/><br/>
+            <h1>Enter Your Auto Loan Data</h1>
+            <br/>
+            <!--
+            decimalPlaces="0"   sets the inputNumber to be integer allowing only numbers to be entered
+            decimalPlaces="N"   sets the inputNumber to be real with N decimal places allowing only numbers and period to be entered
+            symbolPosition="p"  symbol is shown as prefix, before the number
+            symbolPosition="s"  symbol is shown as suffix, after the number
+            class               specifies the name of the style defined in the CSS file globalStyles.css
+            -->
+            <h:panelGrid columns="2" cellpadding="5" columnClasses="panelGridColumn1, panelGridColumn2">
+                <!-- Row 1 Column 1 -->
+                <h:outputLabel for="principalAmount" value="Principal Amount Borrowed:" class="fieldLabel" />
+                <!-- Row 1 Column 2 -->
+                <p:inputNumber id="principalAmount"
+                               value="#{autoLoan.principalAmount}"
+                               decimalPlaces="0" thousandSeparator=","
+                               symbol="$" symbolPosition="p"
+                               required="true" requiredMessage="Please Enter Principal Amount Borrowed!">
+                    <f:validateDoubleRange minimum="1000" maximum="1000000"/>
+                </p:inputNumber>
+
+                <!-- Row 2 Column 1 -->
+                <h:outputLabel for="interestRatePercent" value="Interest Rate Percentage:" class="fieldLabel"/>
+                <!-- Row 2 Column 2 -->
+                <p:inputNumber id="interestRatePercent"
+                               value="#{autoLoan.interestRatePercent}"
+                               decimalPlaces="3"
+                               symbol="%" symbolPosition="s"
+                               required="true" requiredMessage="Please Enter Interest Rate Percentage!">
+                    <f:validateDoubleRange minimum="0.25" maximum="30.00"/>
+                </p:inputNumber>
+
+                <!-- Row 3 Column 1 -->
+                <h:outputLabel for="numberOfYears" value="Number of Years:" class="fieldLabel" />
+                <!-- Row 3 Column 2 -->
+                <p:inputNumber id="numberOfYears"
+                               value="#{autoLoan.numberOfYears}"
+                               decimalPlaces="2"
+                               required="true" requiredMessage="Please Enter Number of Years!">
+                    <f:validateDoubleRange minimum="1" maximum="30"/>
+                </p:inputNumber>
+            </h:panelGrid>
+            <br/><br/>
+            <!--
+            <p:commandButton> performs the Submit of the form in which it is located, i.e. "loanDataEntryForm",
+            by initiating HTTP request/response cycle from within this JSF page.
+
+            When the "Calculate Loan" button is clicked on, the calculateLoan() method of
+            the autoLoan CDI-managed Java bean running on the server computer is executed
+            after first rendering the current page.
+
+            Asynchronous JavaScript and XML (AJAX):
+                    When <p:commandButton> Submits an asynchronous request from the client to the server,
+                    the server sends back a response that is used to update the JSF page.
+                    The term AJAX refers to this interaction between the client and server.
+
+            The "ajax" attribute of <p:commandButton> specifies the Submit mode:
+                    ajax="true" (default)
+                        causes the Submit to be made with Ajax. This means that the server
+                        will send back a response that is used to update the current JSF page.
+
+                    ajax="false" causes the Submit to be made without Ajax. This means that the server
+                        will not send back a response that is used to update current JSF page.
+
+            Clicking the commandButton initiates form submission, which causes the current page to be
+            first rendered before the CDI-managed java bean's method is executed. During the rendering,
+            each <p:inputNumber> data field with required="true" is tested if a value is entered.
+            If a value is not entered, the requiredMessage attribute value of <p:inputNumber> is
+            displayed as an error message. Value ranges are tested using the validateDoubleRange tag.
+            If all fields pass the validation tests, then the CDI-managed java bean's method is executed.
+            -->
+            <p:commandButton value="Calculate Loan" icon="fas fa-calculator" styleClass="rounded-button"
+                             ajax="false" action="#{autoLoan.calculateLoan()}" />
+            &nbsp;
+            <!--
+            To clear entered input data, property values of the CDI-managed java bean must be reset.
+
+            <p:commandButton> renders a Submit action and therefore it must be specified within <h:form>.
+
+            We want the <p:commandButton> to perform its 'action' or 'actionListener' immediately
+            without first rendering the current JSF page by using the attribute immediate="true".
+
+            JSF application lifecycle execute phase contains the following subphases:
+
+                1. Restore View Phase
+                2. Apply Request Values Phase
+                3. Process Validations Phase
+                4. Update Model Values Phase
+                5. Invoke Application Phase
+                6. Render Response Phase
+
+            immediate="true" causes the execution of only the Apply Request Values Phase.
+            Therefore, the Process Validations Phase is skipped implying that the
+            validation tests in the JSF page are not processed.
+
+            Input components keep their local values at state when validation fails.
+            p:resetInput is used to clear the cached values from state so that
+            components retrieve their values from the CDI-managed java bean instead.
+            -->
+            <p:commandButton value="Clear" icon="fas fa-undo" styleClass="ui-button-outlined"
+                             ajax="false" immediate="true"
+                             actionListener="#{autoLoan.clear()}" >
+
+                <p:resetInput target="loanDataEntryForm"/>
+            </p:commandButton>
+
+        </h:form>
+    </div>
+</h:body>
+</html>

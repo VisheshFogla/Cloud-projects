@@ -1,0 +1,77 @@
+/*********************************************
+Cascading Style Sheets (CSS) Style Definitions
+Created by Osman Balci for the AutoLoan app.
+*********************************************/
+
+html, body {
+    background-color: linen;
+    margin: 0 0 0 0;    /* top right bottom left */
+    width: 100%;        /* Set page width horizontally 100% */
+    height: 100%;       /* Set page height vertically 100% */
+}
+
+/* Style standard HTML tags body and paragraph p */
+body, p {
+    font-family: "Times New Roman", Times, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    color: black;
+}
+
+/* Style standard HTML tag header 1 */
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    color: maroon;
+}
+
+/* Style p:panelGrid Column 1 */
+.panelGridColumn1 {
+    text-align: right;
+    white-space: nowrap;        /* Disallow line break */
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    background-color: papayawhip !important;
+}
+
+/* Style p:panelGrid Column 2 */
+.panelGridColumn2 {
+    text-align: left;
+    white-space: nowrap;        /* Disallow line break */
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    background-color: oldlace !important;
+}
+
+/*
+Proportionately scale image to show on mobile devices and smaller browser windows.
+Scale the image downward, but do not enlarge it beyond its actual width size.
+*/
+.scalableImage {
+    max-width: 100%;
+    height: auto;
+    border: none;
+}
+
+/* Style the field labels in index and results */
+.fieldLabel {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    font-weight: normal;
+    font-style: normal;
+    color: darkgreen;
+}
+
+/* Style the field values in index and results */
+.fieldValue {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    font-weight: normal;
+    font-style: normal;
+    color: darkblue;
+}
